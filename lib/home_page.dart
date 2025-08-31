@@ -16,39 +16,29 @@ class _HomePageState extends State<HomePage> {
       job: "Software Engineer",
     ),
     Employee(
-      name: "Michael Smith",
+      name: "Maybelle Smith",
       picture: "assets/images/avatar2.jpeg",
       job: "Project Manager",
     ),
     Employee(
-      name: "Sophia Brown",
+      name: "Alice Johnson",
       picture: "assets/images/avatar.jpeg",
-      job: "UI/UX Designer",
+      job: "Software Engineer",
     ),
     Employee(
-      name: "James Williams",
+      name: "Maybelle Smith",
       picture: "assets/images/avatar2.jpeg",
-      job: "Data Scientist",
+      job: "Project Manager",
     ),
     Employee(
-      name: "Emma Davis",
+      name: "Alice Johnson",
       picture: "assets/images/avatar.jpeg",
-      job: "QA Engineer",
+      job: "Software Engineer",
     ),
     Employee(
-      name: "Daniel Wilson",
+      name: "Maybelle Smith",
       picture: "assets/images/avatar2.jpeg",
-      job: "DevOps Engineer",
-    ),
-    Employee(
-      name: "Olivia Taylor",
-      picture: "assets/images/avatar.jpeg",
-      job: "Product Owner",
-    ),
-    Employee(
-      name: "Ethan Martinez",
-      picture: "assets/images/avatar2.jpeg",
-      job: "Mobile Developer",
+      job: "Project Manager",
     ),
   ];
 
@@ -88,6 +78,11 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: ListTile(
+                      title: Text(
+                        employee.name,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(employee.job),
                       // tileColor: Colors.blue.shade200,
                       // selectedTileColor: Colors.blue.shade100,
                       leading: ClipRRect(
@@ -107,7 +102,59 @@ class _HomePageState extends State<HomePage> {
             );
           } else {
             //tablet view
-            return Container();
+            return SizedBox(
+              child: GridView.builder(
+                scrollDirection: Axis.vertical,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 250, // max width per tile
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                  childAspectRatio: 0.5,
+                ),
+                itemCount: personnel.length,
+                itemBuilder: (context, index) {
+                  final employee = personnel[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2), // shadow color
+                          spreadRadius: 2, // how wide the shadow spreads
+                          blurRadius: 6, // how soft the shadow looks
+                          offset: Offset(3, 3), // X,Y movement of shadow
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(50.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            employee.name,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(employee.job),
+                          // tileColor: Colors.blue.shade200,
+                          // selectedTileColor: Colors.blue.shade100,
+                          ClipRRect(
+                            //so clipRect does have a border radius
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(
+                              employee.picture,
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
           }
         },
       ),
