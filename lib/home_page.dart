@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'employee.dart';
 
@@ -11,152 +12,172 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<Employee> personnel = [
     Employee(
-      name: "Alice Johnson",
+      name: "employee_name_1",
       picture: "assets/images/avatar.jpeg",
-      job: "Software Engineer",
+      job: "software_engineer",
     ),
     Employee(
-      name: "Maybelle Smith",
+      name: "employee_name_2",
       picture: "assets/images/avatar2.jpeg",
-      job: "Project Manager",
+      job: "project_manager",
     ),
     Employee(
-      name: "Alice Johnson",
+      name: "employee_name_1",
       picture: "assets/images/avatar.jpeg",
-      job: "Software Engineer",
+      job: "software_engineer",
     ),
     Employee(
-      name: "Maybelle Smith",
+      name: "employee_name_2",
       picture: "assets/images/avatar2.jpeg",
-      job: "Project Manager",
-    ),
-    Employee(
-      name: "Alice Johnson",
+      job: "project_manager",
+    ), Employee(
+      name: "employee_name_1",
       picture: "assets/images/avatar.jpeg",
-      job: "Software Engineer",
+      job: "software_engineer",
     ),
     Employee(
-      name: "Maybelle Smith",
+      name: "employee_name_2",
       picture: "assets/images/avatar2.jpeg",
-      job: "Project Manager",
+      job: "project_manager",
     ),
   ];
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //we have a blocBuilder too that takes Bloc Class and STATE, that takes a builder, that takes context  and STATE.
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth < 600) {
-            //mobile view
-            return ListView.separated(
-              separatorBuilder:
-                  (context, index) => SizedBox(height: 15), // or Divider()
-              // all properties apply to both; OG and The named constructor's.
-              // Except children: []: only valid for the OG listview without the named constructor .builder
-              // shrinkWrap: If true, ListView takes only as much space as needed, instead of expanding infinitely.
-              // itemExtent: Fix height (or width if horizontal) for each item → improves performance.
-              padding: EdgeInsets.all(16),
-              scrollDirection: Axis.vertical,
-              itemCount: personnel.length,
-              itemBuilder: (context, index) {
-                final employee = personnel[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // shadow color
-                        spreadRadius: 2, // how wide the shadow spreads
-                        blurRadius: 6, // how soft the shadow looks
-                        offset: Offset(3, 3), // X,Y movement of shadow
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: ListTile(
-                      title: Text(
-                        employee.name,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(employee.job),
-                      // tileColor: Colors.blue.shade200,
-                      // selectedTileColor: Colors.blue.shade100,
-                      leading: ClipRRect(
-                        //so clipRect does have a border radius
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.asset(
-                          employee.picture,
-                          width: 60,
-                          height: 60,
-                          fit: BoxFit.cover,
+      body: Column(
+        children: [
+          //That’s because ListView (or GridView) inside LayoutBuilder tries to be infinite in height, while Column gives it no vertical limit.
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth < 600) {
+                  //mobile view
+                  return ListView.separated(
+                    separatorBuilder:
+                        (context, index) =>
+                            SizedBox(height: 15), // or Divider()
+                    // all properties apply to both; OG and The named constructor's.
+                    // Except children: []: only valid for the OG listview without the named constructor .builder
+                    // shrinkWrap: If true, ListView takes only as much space as needed, instead of expanding infinitely.
+                    // itemExtent: Fix height (or width if horizontal) for each item → improves performance.
+                    padding: EdgeInsets.all(16),
+                    scrollDirection: Axis.vertical,
+                    itemCount: personnel.length,
+                    itemBuilder: (context, index) {
+                      final employee = personnel[index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(
+                                0.2,
+                              ), // shadow color
+                              spreadRadius: 2, // how wide the shadow spreads
+                              blurRadius: 6, // how soft the shadow looks
+                              offset: Offset(3, 3), // X,Y movement of shadow
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          } else {
-            //tablet view
-            return SizedBox(
-              child: GridView.builder(
-                scrollDirection: Axis.vertical,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 250, // max width per tile
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 0.7,
-                ),
-                itemCount: personnel.length,
-                itemBuilder: (context, index) {
-                  final employee = personnel[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2), // shadow color
-                          spreadRadius: 2, // how wide the shadow spreads
-                          blurRadius: 6, // how soft the shadow looks
-                          offset: Offset(3, 3), // X,Y movement of shadow
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            employee.name,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(employee.job),
-                          // tileColor: Colors.blue.shade200,
-                          // selectedTileColor: Colors.blue.shade100,
-                          ClipRRect(
-                            //so clipRect does have a border radius
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              employee.picture,
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ListTile(
+                            title: Text(
+                              employee.name.tr(),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(employee.job.tr()),
+                            // tileColor: Colors.blue.shade200,
+                            // selectedTileColor: Colors.blue.shade100,
+                            leading: ClipRRect(
+                              //so clipRect does have a border radius
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.asset(
+                                employee.picture,
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ],
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  //tablet view
+                  return SizedBox(
+                    child: GridView.builder(
+                      scrollDirection: Axis.vertical,
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 250, // max width per tile
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                        childAspectRatio: 0.7,
                       ),
+                      itemCount: personnel.length,
+                      itemBuilder: (context, index) {
+                        final employee = personnel[index];
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(
+                                  0.2,
+                                ), // shadow color
+                                spreadRadius: 2, // how wide the shadow spreads
+                                blurRadius: 6, // how soft the shadow looks
+                                offset: Offset(3, 3), // X,Y movement of shadow
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(50.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  employee.name.tr(),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(employee.job.tr()),
+                                // tileColor: Colors.blue.shade200,
+                                // selectedTileColor: Colors.blue.shade100,
+                                ClipRRect(
+                                  //so clipRect does have a border radius
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.asset(
+                                    employee.picture,
+                                    width: 60,
+                                    height: 60,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   );
-                },
-              ),
-            );
-          }
-        },
+                }
+              },
+            ),
+          ),
+          IconButton(onPressed: (){
+            if (context.locale.languageCode == 'en'){
+              context.setLocale(Locale('ar'));
+            }
+            else {
+              context.setLocale(Locale('en'));
+            }
+          }, icon: Icon(Icons.language)),
+        ],
       ),
     );
   }
@@ -325,6 +346,45 @@ final List<Employee> personnel = [];
 - ListTile(leading: ClipOval(child: Image.asset(...))) → circular.
 - ClipRRect → rounded rectangles.
 - Can combine with SizedBox to fix sizes.
+
+
+/*
+------------------------------------------------------------
+📝 Why using .tr() in model initialization is wrong
+------------------------------------------------------------
+
+1. What .tr() does:
+   - It's an extension from `easy_localization`.
+   - Looks up a key in the current locale (ex: "employee_directory".tr()).
+   - Returns the translated string from your JSON files.
+   - Relies on the BuildContext + current locale.
+
+2. When used inside a widget:
+   - Safe ✅ because widgets rebuild on locale change.
+   - Example: Text("employee_directory".tr()) updates automatically when switching language.
+
+3. When used at object initialization:
+   - Runs once at startup → returns a plain translated string.
+   - Example:
+       Employee(name: "employee_name_1".tr())
+     Here the translated string is baked into the object.
+   - ⚠️ Problem: Locale changes won’t affect this value anymore.
+
+4. Correct usage:
+   - Store only the translation keys in your model (stable values).
+   - Translate at UI rendering time, e.g. inside ListTile or Text widget.
+   - Example:
+       Employee(name: "employee_name_1", job: "software_engineer");
+       ...
+       Text(employee.name.tr())  // ✅ dynamic translation
+
+------------------------------------------------------------
+Rule of thumb:
+👉 Only call .tr() at render time (inside widgets),
+   never at data initialization time.
+------------------------------------------------------------
+*/
+
 
 =============================================
 END OF KNOWLEDGE RECAP
