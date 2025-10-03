@@ -30,7 +30,8 @@ class _HomePageState extends State<HomePage> {
       name: "employee_name_2",
       picture: "assets/images/avatar2.jpeg",
       job: "project_manager",
-    ), Employee(
+    ),
+    Employee(
       name: "employee_name_1",
       picture: "assets/images/avatar.jpeg",
       job: "software_engineer",
@@ -41,7 +42,6 @@ class _HomePageState extends State<HomePage> {
       job: "project_manager",
     ),
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -169,14 +169,16 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
-          IconButton(onPressed: (){
-            if (context.locale.languageCode == 'en'){
-              context.setLocale(Locale('ar'));
-            }
-            else {
-              context.setLocale(Locale('en'));
-            }
-          }, icon: Icon(Icons.language)),
+          IconButton(
+            onPressed: () {
+              if (context.locale.languageCode == 'en') {
+                context.setLocale(Locale('ar'));
+              } else {
+                context.setLocale(Locale('en'));
+              }
+            },
+            icon: Icon(Icons.language),
+          ),
         ],
       ),
     );
